@@ -4,9 +4,16 @@ FROM openjdk:17-jdk-slim
 # Establece el directorio de trabajo
 WORKDIR /app
 
-# Copia el archivo pom.xml y el código fuente
+# Copia el archivo pom.xml y los archivos mvnw y la carpeta .mvn
 COPY pom.xml .
+COPY .mvn .mvn
+COPY mvnw .
+
+# Copia el código fuente
 COPY src ./src
+
+# Cambia permisos de ejecución a mvnw
+RUN chmod +x mvnw
 
 # Construye el proyecto
 RUN ./mvnw clean package -DskipTests
