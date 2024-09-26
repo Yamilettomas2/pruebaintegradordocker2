@@ -5,7 +5,7 @@ FROM maven:3.8.5-openjdk-17 AS build
 WORKDIR /app
 
 # Copia el archivo pom.xml y los archivos mvnw y la carpeta .mvn
-COPY pom.xml .
+COPY pom.xml . 
 COPY .mvn .mvn
 COPY mvnw .
 
@@ -23,9 +23,6 @@ FROM openjdk:17-jdk-slim
 
 # Configura el directorio de trabajo en el contenedor
 WORKDIR /app
-
-# Asegúrate de que el archivo JAR se haya generado
-RUN ls -l target/
 
 # Copia el archivo JAR generado desde la etapa de construcción
 COPY --from=build /app/target/*.jar app.jar
